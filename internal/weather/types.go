@@ -45,3 +45,16 @@ type Forecast struct {
 	Hourly  []HourPoint
 	Daily   []DayPoint
 }
+
+
+const (
+	layoutDateTime = "2006-01-02T15:04"
+	layoutDate     = "2006-01-02"
+)
+
+func derefInt(p *int) int {
+	if p == nil {
+		return 0
+	}
+	return *p
+}

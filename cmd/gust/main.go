@@ -7,5 +7,5 @@ import (
 )
 
 func main() {
-	fmt.Printf("%+v\n", weather.FetchWeather())
+	fmt.Printf("%+v\n", weather.FetchForecast().Current)
 }
