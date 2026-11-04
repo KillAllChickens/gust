@@ -20,11 +20,7 @@ func TermWidth() int {
 	return 80
 }
 
-func main() {
-	forecast := weather.FetchForecast()
-	width := TermWidth()
-	msg := fmt.Sprintf("Temp: %f°F", forecast.Current.TempC)
-
+func centerPrint(width int, msg string) {
 	for _ = range (width/2) - (len(msg)/2) {
 		fmt.Print(" ")
 	}
@@ -33,4 +29,17 @@ func main() {
 		fmt.Print(" ")
 	}
 	fmt.Print("\n")
+}
+
+func main() {
+	forecast := weather.FetchForecast()
+	width := TermWidth()
+	centerPrint(width, fmt.Sprintf("Temp: %f°F", forecast.Current.TempC))
+
+
+	for _, hour := range forecast.Hourly {
+		fmt.Printf("%s, %f\n", hour.Time, hour.TempC)
+	}
+
+
 }
