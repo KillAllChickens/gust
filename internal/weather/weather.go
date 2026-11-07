@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/KillAllChickens/gust/internal/convert"
-	"resty.dev/v3"
+	"github.com/KillAllChickens/gust/internal/httpclient"
 )
 
 type respDataCurrent struct {
@@ -44,22 +44,22 @@ type respData struct {
 
 func FetchForecast() Forecast {
 	lat, long := "37.9967", "-88.9201"
-	client := resty.New()
-	client.SetBaseURL("https://api.open-meteo.com")
-	client.SetHeader("Accept-Encoding", "gzip")
-	client.SetQueryParams(map[string]string{
-		"current":   "temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,weather_code",
-		"hourly":    "temperature_2m,wind_speed_10m,weather_code,precipitation_probability",
-		"daily":     "temperature_2m_max,temperature_2m_min,precipitation_probability_max,weather_code,sunrise,sunset",
-		"timezone":  "auto",
-		"latitude":  lat,
-		"longitude": long,
-	})
+	// client := httpclient.Get()
+	// client.SetBaseURL("https://api.open-meteo.com")
+	// client.
 
 	var finalData respData
-	forecastResp, err := client.R().
+	forecastResp, err := httpclient.Get().R().
 		SetResult(&finalData).
-		Get("/v1/forecast")
+		SetQueryParams(map[string]string{
+			"current":   "temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,weather_code",
+			"hourly":    "temperature_2m,wind_speed_10m,weather_code,precipitation_probability",
+			"daily":     "temperature_2m_max,temperature_2m_min,precipitation_probability_max,weather_code,sunrise,sunset",
+			"timezone":  "auto",
+			"latitude":  lat,
+			"longitude": long,
+		}).
+		Get("https://api.open-meteo.com/v1/forecast")
 	if err != nil {
 		log.Fatalf("request failed: %v", err)
 	}
