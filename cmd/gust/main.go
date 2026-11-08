@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/KillAllChickens/gust/internal/cli"
 	"github.com/KillAllChickens/gust/internal/geocode"
 )
 
@@ -39,5 +40,7 @@ import (
 // }
 
 func main() {
-	geocode.SearchCity("Benton")
+	city, _ := cli.Ask("Find your city: ")
+	geocode.SearchCity(city)
+	_, _ = cli.Ask("What ID is associated with your city? ")
 }
