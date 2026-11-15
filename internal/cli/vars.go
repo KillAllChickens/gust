@@ -4,6 +4,7 @@ import (
 	"strings"
 
 	"github.com/ergochat/readline"
+	"github.com/spf13/cobra"
 )
 
 var rl *readline.Instance
@@ -29,3 +30,6 @@ func Ask(prompt string) (string, error) {
 	}
 	return strings.TrimSpace(line), nil
 }
+
+
+var AllCommands = []*cobra.Command{ConfigCmd}

@@ -2,6 +2,7 @@ package weather
 
 import (
 	"log"
+	"strconv"
 	"time"
 
 	"github.com/KillAllChickens/gust/internal/convert"
@@ -42,8 +43,7 @@ type respData struct {
 	Daily    respDataDaily   `json:"daily"`
 }
 
-func FetchForecast() Forecast {
-	lat, long := "37.9967", "-88.9201"
+func FetchForecast(flLat, flLong float64) Forecast {
 	// client := httpclient.Get()
 	// client.SetBaseURL("https://api.open-meteo.com")
 	// client.
@@ -56,8 +56,8 @@ func FetchForecast() Forecast {
 			"hourly":    "temperature_2m,wind_speed_10m,weather_code,precipitation_probability",
 			"daily":     "temperature_2m_max,temperature_2m_min,precipitation_probability_max,weather_code,sunrise,sunset",
 			"timezone":  "auto",
-			"latitude":  lat,
-			"longitude": long,
+			"latitude":  strconv.FormatFloat(flLat, 'f', -1, 64),
+			"longitude": strconv.FormatFloat(flLong, 'f', -1, 64),
 		}).
 		Get("https://api.open-meteo.com/v1/forecast")
 	if err != nil {

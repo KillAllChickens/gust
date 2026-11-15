@@ -12,7 +12,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var configCmd = &cobra.Command{
+var ConfigCmd = &cobra.Command{
 	Use:     "config",
 	Short:   "Set Config",
 	Example: "urly config",

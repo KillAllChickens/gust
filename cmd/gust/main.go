@@ -3,12 +3,8 @@ package main
 import (
 	"fmt"
 	"os"
-	"strconv"
-	"text/tabwriter"
 
 	"github.com/KillAllChickens/gust/internal/cli"
-	"github.com/KillAllChickens/gust/internal/config"
-	"github.com/KillAllChickens/gust/internal/geocode"
 )
 
 // func TermWidth() int {
@@ -45,9 +41,17 @@ import (
 // 	}
 // }
 
+func init() {
+	// registerFlags()
+
+	for _, comm := range cli.AllCommands {
+		cli.RootCmd.AddCommand(comm)
+	}
+}
+
 func main() {
-
-
-
-
+	if err := cli.RootCmd.Execute(); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
 }
