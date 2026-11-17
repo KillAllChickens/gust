@@ -1,16 +1,20 @@
 package weather
 
-import "time"
+import (
+	"time"
+
+	"github.com/KillAllChickens/gust/internal/convert"
+)
 
 type Condition string
 
 const (
 	Clear        Condition = "clear"
 	Cloudy       Condition = "cloudy"
-	Rain         Condition = "rain"
-	Snow         Condition = "snow"
-	Thunderstorm Condition = "thunderstorm"
-	Fog          Condition = "fog"
+	Rain         Condition = "rainy"
+	Snow         Condition = "snowing"
+	Thunderstorm Condition = "thunderstorming"
+	Fog          Condition = "foggy"
 	Unknown      Condition = "unknown"
 )
 
@@ -46,6 +50,26 @@ type Forecast struct {
 	Daily   []DayPoint
 }
 
+type Units struct {
+	Temp     func(c float64) float64
+	Wind     func(kph float64) float64
+	TempUnit string
+	windUnit string
+}
+
+func identity(v float64) float64 { return v }
+
+func NewUnits(system string) Units {
+	if system == "imperial" {
+		return Units{
+			Temp: convert.CelsiusToFahrenheit,
+			Wind: convert.KphToMph,
+			TempUnit: "°F",
+			windUnit: "mph",
+		}
+	}
+	return Units{identity, identity, "°C", "km/h"}
+}
 
 const (
 	layoutDateTime = "2006-01-02T15:04"

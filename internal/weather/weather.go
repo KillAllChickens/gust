@@ -5,7 +5,6 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/KillAllChickens/gust/internal/convert"
 	"github.com/KillAllChickens/gust/internal/httpclient"
 )
 
@@ -70,10 +69,10 @@ func FetchForecast(flLat, flLong float64) Forecast {
 	currentCondition := CodeToCondition(finalData.Current.WeatherCode)
 
 	currentData := CurrentWeather{
-		TempC:       convert.CelsiusToFahrenheit(finalData.Current.Temp),
-		FeelsLikeC:  convert.CelsiusToFahrenheit(finalData.Current.FeelsLike),
+		TempC:       finalData.Current.Temp,
+		FeelsLikeC:  finalData.Current.FeelsLike,
 		HumidityPct: finalData.Current.HumidityPct,
-		WindKph:     convert.KphToMph(finalData.Current.WindKph),
+		WindKph:     finalData.Current.WindKph,
 		Condition:   currentCondition,
 	}
 
@@ -84,10 +83,10 @@ func FetchForecast(flLat, flLong float64) Forecast {
 
 		hourly = append(hourly, HourPoint{
 			Time:         t,
-			TempC:        convert.CelsiusToFahrenheit(h.Temp[i]),
+			TempC:        h.Temp[i],
 			Condition:    CodeToCondition(h.Code[i]),
 			PrecipChance: derefInt(h.PrecipProb[i]),
-			WindKph:      convert.KphToMph(h.Wind[i]),
+			WindKph:      h.Wind[i],
 		})
 	}
 
@@ -108,8 +107,8 @@ func FetchForecast(flLat, flLong float64) Forecast {
 		}
 		daily = append(daily, DayPoint{
 			Date:         date,
-			HighC:        convert.CelsiusToFahrenheit(d.TempMax[i]),
-			LowC:         convert.CelsiusToFahrenheit(d.TempMin[i]),
+			HighC:        d.TempMax[i],
+			LowC:         d.TempMin[i],
 			Condition:    CodeToCondition(d.Code[i]),
 			PrecipChance: derefInt(d.PrecipProb[i]),
 			Sunrise:      sunrise,

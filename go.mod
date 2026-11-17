@@ -6,6 +6,7 @@ require (
 	github.com/ergochat/readline v0.1.3
 	github.com/pelletier/go-toml/v2 v2.4.3
 	github.com/spf13/cobra v1.10.2
+	golang.org/x/term v0.34.0
 	resty.dev/v3 v3.0.0-rc.4
 )
 
